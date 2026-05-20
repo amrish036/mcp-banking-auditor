@@ -1,118 +1,26 @@
-# MCP Banking Auditor
+# Agentic MCP Banking Auditor 🏦 🤖
 
-An Anti-Money Laundering (AML) compliance audit server built with the Model Context Protocol (MCP). This project provides AI-powered tools to detect suspicious transactions and enforce AML compliance rules based on AUSTRAC-style policies.
+A senior-level implementation of a localized AI compliance auditor using the **Model Context Protocol (MCP)**. This project demonstrates how to bridge reasoning models (like Claude 3.5) with secure, isolated banking data to automate AML (Anti-Money Laundering) detection.
 
-## Features
+## 🚀 Key Features
 
-- **Suspicious Transaction Detection**: Identifies transactions exceeding high-value thresholds
-- **Compliance Rule Engine**: Enforces AML compliance policies including:
-  - High-value transaction flagging (>$10,000 AUD)
-  - Structuring/smurfing pattern detection
-  - High-risk transaction description analysis
-- **SQLite Database**: Persistent storage for banking ledger data
-- **MCP Server**: Integrates with AI systems through the Model Context Protocol
+- **Agentic Workflows**: Allows AI to dynamically discover compliance rules and audit live transactions.
+- **Protocol-First**: Built on the 2026 MCP standard for secure tool-integration.
+- **Security Sandbox**: Uses a decoupled architecture where the LLM never has direct DB access; it only interacts via validated tool schemas.
 
-## Prerequisites
+## 🛠️ Tech Stack
 
-- Node.js 18+
-- pnpm 11.1.0 or later (will auto-download if needed)
+- **Runtime**: Node.js (ESM) with **pnpm**.
+- **Language**: TypeScript (Strict Mode).
+- **Data**: SQLite (Relational Ledger).
+- **Interface**: Model Context Protocol (MCP)[cite: 1].
 
-## Installation
+## 🚦 Getting Started
 
-1. Clone the repository:
+1. **Setup Data**: `pnpm run seed` (Generates mock transactions).
+2. **Build**: `pnpm run build`.
+3. **Inspect**: `pnpm run inspect` (Launches the MCP Inspector).
 
-```bash
-git clone <repository-url>
-cd mcp-banking-auditor
-```
+## 📊 Mock Audit Scenario
 
-2. Install dependencies:
-
-```bash
-pnpm install
-```
-
-3. Set up the database:
-
-```bash
-pnpm run seed
-```
-
-## Quick Start
-
-### Development Mode
-
-Run the auditor server in development mode:
-
-```bash
-pnpm run dev
-```
-
-### Build
-
-Compile TypeScript to JavaScript:
-
-```bash
-pnpm run build
-```
-
-### Production
-
-Start the compiled server:
-
-```bash
-pnpm run start
-```
-
-### Inspect
-
-Launch the MCP Inspector to test tools and inspect the server:
-
-```bash
-pnpm run inspect
-```
-
-## Project Structure
-
-```
-├── src/
-│   └── index.ts          # Main MCP server implementation
-├── setup_db.js           # Database initialization script
-├── local_rules.md        # AML compliance rules and policies
-├── package.json          # Project metadata and dependencies
-├── pnpm-workspace.yaml   # Workspace configuration
-└── tsconfig.json         # TypeScript configuration
-```
-
-## Available Tools
-
-### get_suspicious_transactions
-
-Queries the ledger for transactions that may require auditing based on high value or status.
-
-**Parameters:**
-
-- `minAmount` (number): The minimum amount to flag
-
-### read_compliance_policy
-
-Reads the internal AML compliance rules for auditing guidance.
-
-## Compliance Rules
-
-The auditor enforces the following AML compliance rules (defined in `local_rules.md`):
-
-- **Rule 101**: Flag transactions exceeding $10,000 AUD
-- **Rule 202**: Detect structuring patterns (multiple transactions totaling >$10,000 on the same day)
-- **Rule 303**: Flag high-risk transaction descriptions for non-business accounts
-
-## Technologies
-
-- **Framework**: Model Context Protocol (MCP)
-- **Language**: TypeScript
-- **Database**: SQLite3
-- **Package Manager**: pnpm
-
-## License
-
-ISC
+This repo includes a "Structuring" scenario where an account makes two transfers of $9,500 on the same day. The AI auditor uses the `read_compliance_policy` tool to identify this as a breach of Rule 202 and flags the account[cite: 1].
